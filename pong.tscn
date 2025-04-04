@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bad1jqq6oqd3t"]
+[gd_scene load_steps=9 format=3 uid="uid://bad1jqq6oqd3t"]
 
 [ext_resource type="PackedScene" uid="uid://bwic4ow412bcu" path="res://player.tscn" id="1_8w31r"]
 [ext_resource type="Script" uid="uid://b8yu4joc1idmv" path="res://pong.gd" id="1_pkvn5"]
 [ext_resource type="PackedScene" uid="uid://ck4i0k2wn26lv" path="res://ball.tscn" id="2_4opyw"]
+[ext_resource type="PackedScene" uid="uid://bbwfi5b78o1i6" path="res://player2.tscn" id="3_eipaa"]
 [ext_resource type="Texture2D" uid="uid://bnj3hx63wqht" path="res://icon.svg" id="4_m5tya"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4opyw"]
@@ -46,8 +47,9 @@ shape = SubResource("WorldBoundaryShape2D_m5tya")
 
 [node name="Player" parent="." instance=ExtResource("1_8w31r")]
 
-[node name="Player2" parent="." instance=ExtResource("1_8w31r")]
-position = Vector2(1254, 0)
+[node name="Player2" parent="." instance=ExtResource("3_eipaa")]
+position = Vector2(1254, -1)
+speed = 5.0
 
 [node name="ball" parent="." instance=ExtResource("2_4opyw")]
 position = Vector2(640, 360)
