@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://bad1jqq6oqd3t"]
+
+[ext_resource type="PackedScene" uid="uid://bwic4ow412bcu" path="res://player.tscn" id="1_8w31r"]
+[ext_resource type="Script" uid="uid://b8yu4joc1idmv" path="res://pong.gd" id="1_pkvn5"]
+[ext_resource type="PackedScene" uid="uid://ck4i0k2wn26lv" path="res://ball.tscn" id="2_4opyw"]
+[ext_resource type="Texture2D" uid="uid://bnj3hx63wqht" path="res://icon.svg" id="4_m5tya"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4opyw"]
+distance = 84.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pkvn5"]
+distance = -83.0001
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m5tya"]
+distance = -180.0
+
+[node name="Pong" type="Node2D"]
+script = ExtResource("1_pkvn5")
+
+[node name="Map Area" type="StaticBody2D" parent="."]
+
+[node name="Top Border" type="CollisionShape2D" parent="Map Area"]
+position = Vector2(564, -83)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_4opyw")
+
+[node name="BottomBorder" type="CollisionShape2D" parent="Map Area"]
+position = Vector2(620, 638)
+shape = SubResource("WorldBoundaryShape2D_pkvn5")
+
+[node name="Player1Goal" type="Area2D" parent="Map Area"]
+position = Vector2(-46, 1)
+
+[node name="Player1GoalBorder" type="CollisionShape2D" parent="Map Area/Player1Goal"]
+position = Vector2(224, 273)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_m5tya")
+
+[node name="Player2Goal" type="Area2D" parent="Map Area"]
+position = Vector2(-46, 1)
+
+[node name="Player2GoalBorder" type="CollisionShape2D" parent="Map Area/Player2Goal"]
+position = Vector2(1148, 293)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_m5tya")
+
+[node name="Player" parent="." instance=ExtResource("1_8w31r")]
+
+[node name="Player2" parent="." instance=ExtResource("1_8w31r")]
+position = Vector2(1254, 0)
+
+[node name="ball" parent="." instance=ExtResource("2_4opyw")]
+position = Vector2(640, 360)
+
+[node name="respawnBall" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Score" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 721.0
+
+[node name="Player1Score" type="Label" parent="Score"]
+layout_mode = 1
+offset_left = 597.0
+offset_top = 68.0
+offset_right = 637.0
+offset_bottom = 91.0
+text = "0"
+
+[node name="Player2Score" type="Label" parent="Score"]
+layout_mode = 0
+offset_left = 642.0
+offset_top = 68.0
+offset_right = 682.0
+offset_bottom = 91.0
+text = "0"
+horizontal_alignment = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(640, 361)
+scale = Vector2(0.03125, 5.65625)
+texture = ExtResource("4_m5tya")
+
+[connection signal="body_entered" from="Map Area/Player1Goal" to="." method="_on_player_1_goal_body_entered"]
+[connection signal="body_entered" from="Map Area/Player2Goal" to="." method="_on_player_2_goal_body_entered"]
+[connection signal="timeout" from="respawnBall" to="." method="_on_respawn_ball_timeout"]
